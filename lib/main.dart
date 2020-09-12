@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,6 +33,7 @@ class ChoicePage extends StatefulWidget {
 class _MyHomePageState extends State<ChoicePage> {
   List options = [];
   final textController = TextEditingController();
+  final resultController = TextEditingController();
 
   void _addOption() {
     setState(() {
@@ -38,6 +41,15 @@ class _MyHomePageState extends State<ChoicePage> {
         options.add(textController.text);
         textController.text = '';
       }
+    });
+  }
+
+  void _chooseOption() {
+    setState(() {
+      int numberOfOptions = options.length;
+      var rndRange = new Random();
+      int randomNumber = rndRange.nextInt(numberOfOptions);
+      resultController.text = options[randomNumber];
     });
   }
 
@@ -69,6 +81,12 @@ class _MyHomePageState extends State<ChoicePage> {
               child: Text('Add option'),
             ),
             Text(options.toString()),
+            RaisedButton(
+              onPressed: _chooseOption,
+              color: Colors.green,
+              child: Text('Randomize!'),
+            ),
+            Text(resultController.text),
           ],
         ),
       ),
